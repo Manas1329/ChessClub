@@ -26,7 +26,14 @@ export default function Login() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed');
       localStorage.setItem('adminToken', data.token);
-      navigate('/admin');
+      navigate('/transition', {
+        state: {
+          to: '/admin',
+          message: 'Setting up admin board...',
+          delay: 1100,
+        },
+      });
+      return;
     } catch (err) {
       setError(err.message);
     } finally {

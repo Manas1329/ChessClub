@@ -349,7 +349,13 @@ export default function AdminDashboard() {
 
   function logout() {
     localStorage.removeItem('adminToken');
-    navigate('/');
+    navigate('/transition', {
+      state: {
+        to: '/',
+        message: 'Saving game and logging out...',
+        delay: 1100,
+      },
+    });
   }
 
   return (

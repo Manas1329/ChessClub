@@ -8,7 +8,13 @@ export default function Navbar() {
 
   function handleLogout() {
     localStorage.removeItem('adminToken');
-    navigate('/');
+    navigate('/transition', {
+      state: {
+        to: '/',
+        message: 'Logging out...',
+        delay: 1100,
+      },
+    });
   }
 
   return (

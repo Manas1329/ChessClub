@@ -1,0 +1,127 @@
+.chess-loader-page {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: #06080c;
+}
+
+.chess-loader-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.chess-loader-board {
+  --cell: 28px;
+  --ring: calc(var(--cell) * 2);
+  --grid-line: #7e8da3;
+  position: relative;
+  width: calc(var(--cell) * 3);
+  height: calc(var(--cell) * 3);
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell));
+  grid-template-rows: repeat(3, var(--cell));
+  border: 2px solid #b7c1cf;
+  border-radius: 2px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.55);
+}
+
+.chess-loader-cell {
+  width: var(--cell);
+  height: var(--cell);
+  box-sizing: border-box;
+  border-right: 1px solid var(--grid-line);
+  border-bottom: 1px solid var(--grid-line);
+}
+
+.chess-loader-cell:nth-child(3n) {
+  border-right: none;
+}
+
+.chess-loader-cell:nth-last-child(-n + 3) {
+  border-bottom: none;
+}
+
+.chess-loader-cell.light {
+  background: #d8deea;
+}
+
+.chess-loader-cell.dark {
+  background: #2b3442;
+}
+
+.chess-loader-rook {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cell);
+  height: var(--cell);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: #f2f6ff;
+  text-shadow: 0 0 10px rgba(95, 130, 190, 0.7);
+  transform: translate(0, 0);
+  animation: rookOuterRing 1.6s linear infinite;
+}
+
+.chess-loader-text {
+  margin: 0;
+  color: #f0f4fb;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes rookOuterRing {
+  0% { transform: translate(0, 0); }
+  12.5% { transform: translate(var(--cell), 0); }
+  25% { transform: translate(var(--ring), 0); }
+  37.5% { transform: translate(var(--ring), var(--cell)); }
+  50% { transform: translate(var(--ring), var(--ring)); }
+  62.5% { transform: translate(var(--cell), var(--ring)); }
+  75% { transform: translate(0, var(--ring)); }
+  87.5% { transform: translate(0, var(--cell)); }
+  100% { transform: translate(0, 0); }
+}
+
+body[data-theme='light'] .chess-loader-board {
+  border-color: #d2dae5;
+  --grid-line: #98a8bf;
+}
+
+body[data-theme='light'] .chess-loader-page {
+  background: #dce4f0;
+}
+
+body[data-theme='light'] .chess-loader-cell.light {
+  background: #e4eaf2;
+}
+
+body[data-theme='light'] .chess-loader-cell.dark {
+  background: #364456;
+}
+
+body[data-theme='light'] .chess-loader-rook {
+  color: #f6f9ff;
+  text-shadow: 0 0 10px rgba(112, 132, 165, 0.55);
+}
+
+body[data-theme='light'] .chess-loader-text {
+  color: #dce6f6;
+}
+
+@media (max-width: 560px) {
+  .chess-loader-board {
+    --cell: 24px;
+  }
+
+  .chess-loader-rook {
+    font-size: 16px;
+  }
+}

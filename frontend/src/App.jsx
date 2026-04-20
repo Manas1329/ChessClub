@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import Merch from './pages/Merch';
 import Gallery from './pages/Gallery';
+import TransitionLoader from './pages/TransitionLoader';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/merch" element={<Merch />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/transition" element={<TransitionLoader />} />
       </Routes>
     </BrowserRouter>
   );
