@@ -2,16 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/homepage.css';
 import '../styles/extraPages.css';
-
-const API = '/api';
-
-function toArrayResponse(payload) {
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.data)) return payload.data;
-  if (Array.isArray(payload?.events)) return payload.events;
-  if (Array.isArray(payload?.items)) return payload.items;
-  return [];
-}
+import { apiUrl, toArrayResponse } from '../utils/api';
 
 function authHeaders() {
   return {
@@ -32,7 +23,7 @@ function ArticlesPanel() {
   useEffect(() => { loadArticles(); }, []);
 
   async function loadArticles() {
-    const r = await fetch(`${API}/articles`);
+    const r = await fetch(apiUrl('/articles'));
     const data = await r.json();
     setArticles(toArrayResponse(data));
   }
@@ -44,7 +35,7 @@ function ArticlesPanel() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const url = editId ? `${API}/articles/${editId}` : `${API}/articles`;
+    const url = editId ? apiUrl(`/articles/${editId}`) : apiUrl('/articles');
     const method = editId ? 'PUT' : 'POST';
     const payload = new FormData();
     Object.entries(form).forEach(([key, value]) => {
@@ -74,7 +65,7 @@ function ArticlesPanel() {
 
   async function handleDelete(id) {
     if (!window.confirm('Delete this article?')) return;
-    await fetch(`${API}/articles/${id}`, { method: 'DELETE', headers: authHeaders() });
+    await fetch(apiUrl(`/articles/${id}`), { method: 'DELETE', headers: authHeaders() });
     loadArticles();
   }
 
@@ -152,13 +143,13 @@ function MembersPanel() {
   useEffect(() => { loadMembers(); }, []);
 
   async function loadMembers() {
-    const r = await fetch(`${API}/members`);
+    const r = await fetch(apiUrl('/members'));
     const data = await r.json();
     setMembers(toArrayResponse(data));
   }
 
   async function updateMember(id, updates) {
-    const r = await fetch(`${API}/members/${id}`, {
+    const r = await fetch(apiUrl(`/members/${id}`), {
       method: 'PATCH', headers: authHeaders(), body: JSON.stringify(updates),
     });
     if (r.ok) { setMsg('Updated.'); loadMembers(); }
@@ -167,7 +158,7 @@ function MembersPanel() {
 
   async function deleteMember(id) {
     if (!window.confirm('Remove this member?')) return;
-    await fetch(`${API}/members/${id}`, { method: 'DELETE', headers: authHeaders() });
+    await fetch(apiUrl(`/members/${id}`), { method: 'DELETE', headers: authHeaders() });
     loadMembers();
   }
 
@@ -225,14 +216,14 @@ function EventsPanel() {
   useEffect(() => { loadEvents(); }, []);
 
   async function loadEvents() {
-    const r = await fetch(`${API}/events`);
+    const r = await fetch(apiUrl('/events'));
     const data = await r.json();
     setEvents(toArrayResponse(data));
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const r = await fetch(`${API}/events`, { method: 'POST', headers: authHeaders(), body: JSON.stringify(form) });
+    const r = await fetch(apiUrl('/events'), { method: 'POST', headers: authHeaders(), body: JSON.stringify(form) });
     if (r.ok) { setMsg('Event added.'); setForm({ name: '', date: '', description: '' }); loadEvents(); }
     else { const d = await r.json(); setMsg(d.error || 'Error'); }
     setTimeout(() => setMsg(''), 2500);
@@ -240,7 +231,7 @@ function EventsPanel() {
 
   async function handleDelete(id) {
     if (!window.confirm('Delete this event?')) return;
-    await fetch(`${API}/events/${id}`, { method: 'DELETE', headers: authHeaders() });
+    await fetch(apiUrl(`/events/${id}`), { method: 'DELETE', headers: authHeaders() });
     loadEvents();
   }
 
@@ -289,14 +280,14 @@ function GalleryPanel() {
   useEffect(() => { loadImages(); }, []);
 
   async function loadImages() {
-    const r = await fetch(`${API}/gallery`);
+    const r = await fetch(apiUrl('/gallery'));
     const data = await r.json();
     setImages(toArrayResponse(data));
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const r = await fetch(`${API}/gallery`, { method: 'POST', headers: authHeaders(), body: JSON.stringify(form) });
+    const r = await fetch(apiUrl('/gallery'), { method: 'POST', headers: authHeaders(), body: JSON.stringify(form) });
     if (r.ok) { setMsg('Image added.'); setForm({ imageUrl: '', caption: '' }); loadImages(); }
     else { const d = await r.json(); setMsg(d.error || 'Error'); }
     setTimeout(() => setMsg(''), 2500);
@@ -304,7 +295,7 @@ function GalleryPanel() {
 
   async function handleDelete(id) {
     if (!window.confirm('Delete this image?')) return;
-    await fetch(`${API}/gallery/${id}`, { method: 'DELETE', headers: authHeaders() });
+    await fetch(apiUrl(`/gallery/${id}`), { method: 'DELETE', headers: authHeaders() });
     loadImages();
   }
 

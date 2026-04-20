@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import '../styles/homepage.css';
 import '../styles/extraPages.css';
 import Navbar from '../components/Navbar';
+import { apiUrl, toArrayResponse } from '../utils/api';
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/gallery')
+    fetch(apiUrl('/gallery'))
       .then(r => r.json())
-      .then(data => { setImages(Array.isArray(data) ? data : []); setLoading(false); })
+      .then(data => { setImages(toArrayResponse(data)); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
 

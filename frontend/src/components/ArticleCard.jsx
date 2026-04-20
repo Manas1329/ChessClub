@@ -1,12 +1,10 @@
 import React from 'react';
-
-const API_ORIGIN = process.env.REACT_APP_API_ORIGIN || 'http://localhost:5000';
+import { assetUrl } from '../utils/api';
 
 function resolveArticleImageUrl(imageUrl) {
   if (!imageUrl) return '';
   if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
-  if (imageUrl.startsWith('/uploads/')) return `${API_ORIGIN}${imageUrl}`;
-  return imageUrl;
+  return assetUrl(imageUrl);
 }
 
 export default function ArticleCard({ article, index }) {

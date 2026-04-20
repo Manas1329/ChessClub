@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/homepage.css';
 import '../styles/extraPages.css';
 import Navbar from '../components/Navbar';
+import { apiUrl, toArrayResponse } from '../utils/api';
 
 export default function Merch() {
   const [products, setProducts] = useState([]);
@@ -10,9 +11,9 @@ export default function Merch() {
   const [addedId, setAddedId] = useState(null);
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch(apiUrl('/products'))
       .then(r => r.json())
-      .then(data => { setProducts(Array.isArray(data) ? data : []); setLoading(false); })
+      .then(data => { setProducts(toArrayResponse(data)); setLoading(false); })
       .catch(() => setLoading(false));
 
     // Load current cart count from localStorage

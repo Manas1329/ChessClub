@@ -4,8 +4,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import ArticleList from '../components/ArticleList';
 import Sidebar from '../components/Sidebar';
-
-const API = '/api';
+import { apiUrl, toArrayResponse } from '../utils/api';
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -20,9 +19,9 @@ export default function Home() {
     async function fetchAll() {
       try {
         const [aRes, mRes, eRes] = await Promise.all([
-          fetch(`${API}/articles`),
-          fetch(`${API}/members`),
-          fetch(`${API}/events`),
+          fetch(apiUrl('/articles')),
+          fetch(apiUrl('/members')),
+          fetch(apiUrl('/events')),
         ]);
         const [articlesData, membersData, eventsData] = await Promise.all([
           aRes.json(),
@@ -30,9 +29,9 @@ export default function Home() {
           eRes.json(),
         ]);
         if (!mounted) return;
-        setArticles(Array.isArray(articlesData) ? articlesData : []);
-        setMembers(Array.isArray(membersData) ? membersData : []);
-        setEvents(Array.isArray(eventsData) ? eventsData : []);
+        setArticles(toArrayResponse(articlesData));
+        setMembers(toArrayResponse(membersData));
+        setEvents(toArrayResponse(eventsData));
       } catch (err) {
         console.error('Fetch error:', err);
       } finally {
