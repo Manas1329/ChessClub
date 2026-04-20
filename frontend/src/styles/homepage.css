@@ -4,6 +4,7 @@ body {
     position: relative;
     min-height: 100vh;
     background: #0d0d0d;
+    --navbar-shadow: grey;
 }
 
 /* ── Navbar ── */
@@ -18,7 +19,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
-    box-shadow: 0 0 10px grey;
+    box-shadow: 0 0 10px var(--navbar-shadow);
     border-radius: 25px;
     padding: 0 20px;
     z-index: 10;
@@ -27,11 +28,11 @@ body {
 }
 
 @keyframes shadowFlow {
-    0%   { box-shadow: 0 0 10px grey; }
-    25%  { box-shadow: 10px 0 20px grey; }
-    50%  { box-shadow: 0 10px 20px grey; }
-    75%  { box-shadow: -10px 0 20px grey; }
-    100% { box-shadow: 0 0 10px grey; }
+    0%   { box-shadow: 0 0 10px var(--navbar-shadow); }
+    25%  { box-shadow: 10px 0 20px var(--navbar-shadow); }
+    50%  { box-shadow: 0 10px 20px var(--navbar-shadow); }
+    75%  { box-shadow: -10px 0 20px var(--navbar-shadow); }
+    100% { box-shadow: 0 0 10px var(--navbar-shadow); }
 }
 
 .navbuttons {

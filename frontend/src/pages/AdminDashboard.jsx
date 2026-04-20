@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../styles/homepage.css';
 import '../styles/extraPages.css';
 import { apiUrl, toArrayResponse } from '../utils/api';
+import ThemeToggle from '../components/ThemeToggle';
 
 function authHeaders() {
   return {
@@ -359,6 +360,7 @@ export default function AdminDashboard() {
         </Link>
         <div className="navbuttons">
           <Link to="/" className="navbutton">← Home</Link>
+          <ThemeToggle />
           <button className="navbutton" onClick={logout}>Logout</button>
         </div>
       </div>

@@ -1,0 +1,185 @@
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle {
+  border: 1px solid grey;
+  background: rgb(28, 28, 28);
+  color: rgb(255, 255, 255);
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 999px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: #787878cb;
+  transform: scale(1.05);
+}
+
+body[data-theme='light'] {
+  background: #e8edf3;
+  color: #2b3545;
+  --navbar-shadow: rgba(128, 145, 170, 0.62);
+}
+
+body[data-theme='light'] .theme-toggle {
+  background: #edf2f8;
+  border-color: #bbc9db;
+  color: #243650;
+}
+
+body[data-theme='light'] .theme-toggle:hover {
+  background: #dce5f1;
+}
+
+body[data-theme='light'] .navbar {
+  background: #eef2f7;
+  border: 1px solid #c6d1e1;
+}
+
+body[data-theme='light'] .navbutton {
+  background: #edf2f8;
+  border-color: #bbc9db;
+  color: #1d2a40;
+}
+
+body[data-theme='light'] .navbutton:hover {
+  background: #dce5f1;
+}
+
+body[data-theme='light'] #title,
+body[data-theme='light'] .section-title,
+body[data-theme='light'] .widget-title,
+body[data-theme='light'] .article-title,
+body[data-theme='light'] .member-name,
+body[data-theme='light'] .admin-section-title,
+body[data-theme='light'] .merch-name,
+body[data-theme='light'] .form-container,
+body[data-theme='light'] .form-container h1 {
+  color: #22314b;
+}
+
+body[data-theme='light'] .section-title,
+body[data-theme='light'] .admin-tabs,
+body[data-theme='light'] .admin-table th,
+body[data-theme='light'] .gallery-page .section-title,
+body[data-theme='light'] .merch-page .section-title {
+  border-color: #d6dfed;
+}
+
+body[data-theme='light'] .article-card,
+body[data-theme='light'] .sidebar-widget,
+body[data-theme='light'] .merch-card,
+body[data-theme='light'] .gallery-item,
+body[data-theme='light'] .admin-form,
+body[data-theme='light'] .form-container,
+body[data-theme='light'] .cart-badge {
+  background: #f3f6fb;
+  border-color: #cad5e4;
+}
+
+body[data-theme='light'] .widget-header {
+  background: #eaf0f8;
+  border-bottom-color: #d1dced;
+}
+
+body[data-theme='light'] .article-body,
+body[data-theme='light'] .member-title,
+body[data-theme='light'] .article-meta,
+body[data-theme='light'] .merch-desc,
+body[data-theme='light'] .gallery-caption,
+body[data-theme='light'] .admin-table,
+body[data-theme='light'] .empty-state {
+  color: #5a6b86;
+}
+
+body[data-theme='light'] .leaderboard-item,
+body[data-theme='light'] .admin-table td,
+body[data-theme='light'] .cal-legend {
+  border-color: #e4ebf5;
+}
+
+body[data-theme='light'] .leaderboard-item:hover,
+body[data-theme='light'] .admin-table tr:hover td,
+body[data-theme='light'] .cal-day:hover:not(.blank) {
+  background: #e5edf8;
+}
+
+body[data-theme='light'] .read-more {
+  color: #2d4f85;
+  border-color: #9db4d8;
+}
+
+body[data-theme='light'] .read-more:hover {
+  color: #17345d;
+  border-color: #5d7cab;
+}
+
+body[data-theme='light'] .article-filter-chip,
+body[data-theme='light'] .admin-tab,
+body[data-theme='light'] .cal-btn,
+body[data-theme='light'] .add-to-cart-btn,
+body[data-theme='light'] .admin-btn,
+body[data-theme='light'] .form-container input,
+body[data-theme='light'] .form-container select,
+body[data-theme='light'] .admin-form input,
+body[data-theme='light'] .admin-form textarea,
+body[data-theme='light'] .admin-form select,
+body[data-theme='light'] .elo-input {
+  background: #eaf0f8;
+  border-color: #becbdd;
+  color: #1f2f49;
+}
+
+body[data-theme='light'] .article-filter-chip.active {
+  background: #22314b;
+  border-color: #22314b;
+  color: #f6f8fb;
+}
+
+body[data-theme='light'] .cal-month-label,
+body[data-theme='light'] .cal-weekdays span,
+body[data-theme='light'] .cal-day,
+body[data-theme='light'] .member-rating {
+  color: #4e627f;
+}
+
+body[data-theme='light'] .form-container {
+  box-shadow: 0 12px 32px rgba(32, 51, 79, 0.16);
+}
+
+body[data-theme='light'] .form-container input::placeholder,
+body[data-theme='light'] .admin-form input::placeholder,
+body[data-theme='light'] .admin-form textarea::placeholder {
+  color: #6f8099;
+}
+
+body[data-theme='light'] .form-container button,
+body[data-theme='light'] .admin-btn.primary,
+body[data-theme='light'] .add-to-cart-btn:hover {
+  background: #2c3d5a;
+  border-color: #2c3d5a;
+  color: #f3f6fb;
+}
+
+body[data-theme='light'] .admin-btn,
+body[data-theme='light'] .admin-btn:hover,
+body[data-theme='light'] .add-to-cart-btn {
+  color: #233653;
+}
+
+body[data-theme='light'] .form-container a {
+  color: #2d4f85;
+}
+
+body[data-theme='light'] .form-container a:hover {
+  color: #17345d;
+}
