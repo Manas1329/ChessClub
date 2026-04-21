@@ -21,3 +21,17 @@ export function toArrayResponse(payload) {
   if (Array.isArray(payload?.items)) return payload.items;
   return [];
 }
+
+export function getAuthToken() {
+  return localStorage.getItem('adminToken') || localStorage.getItem('userToken') || '';
+}
+
+export function getAuthRole() {
+  if (localStorage.getItem('adminToken')) return 'admin';
+  if (localStorage.getItem('userToken')) return 'member';
+  return '';
+}
+
+export function isLoggedIn() {
+  return !!getAuthToken();
+}

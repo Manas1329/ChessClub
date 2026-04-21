@@ -1,12 +1,17 @@
 import React from 'react';
 import Leaderboard from './Leaderboard';
 import CalendarWidget from './Calendar';
+import LiveScoresWidget from './LiveScoresWidget';
+import { isLoggedIn } from '../utils/api';
 
 export default function Sidebar({ members, events }) {
+  const loggedIn = isLoggedIn();
+
   return (
     <aside className="side-section">
       <Leaderboard members={members} />
       <CalendarWidget events={events} />
+      {loggedIn && <LiveScoresWidget />}
 
       {/* Social Links — static, matches original exactly */}
       <div className="sidebar-widget" id="social-widget">

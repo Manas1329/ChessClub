@@ -16,7 +16,7 @@ function authHeaders() {
 
 function ArticlesPanel() {
   const [articles, setArticles] = useState([]);
-  const [form, setForm] = useState({ title: '', body: '', type: 'news', imageUrl: '', meta: '', featured: false });
+  const [form, setForm] = useState({ title: '', body: '', fullBody: '', type: 'news', imageUrl: '', meta: '', featured: false });
   const [imageFile, setImageFile] = useState(null);
   const [editId, setEditId] = useState(null);
   const [msg, setMsg] = useState('');
@@ -48,7 +48,7 @@ function ArticlesPanel() {
     const r = await fetch(url, { method, headers, body: payload });
     if (r.ok) {
       setMsg(editId ? 'Article updated.' : 'Article added.');
-      setForm({ title: '', body: '', type: 'news', imageUrl: '', meta: '', featured: false });
+      setForm({ title: '', body: '', fullBody: '', type: 'news', imageUrl: '', meta: '', featured: false });
       setImageFile(null);
       setEditId(null);
       loadArticles();
@@ -60,7 +60,15 @@ function ArticlesPanel() {
 
   function startEdit(a) {
     setEditId(a._id);
-    setForm({ title: a.title, body: a.body, type: a.type, imageUrl: a.imageUrl || '', meta: a.meta || '', featured: a.featured || false });
+    setForm({
+      title: a.title,
+      body: a.body,
+      fullBody: a.fullBody || a.body || '',
+      type: a.type,
+      imageUrl: a.imageUrl || '',
+      meta: a.meta || '',
+      featured: a.featured || false,
+    });
     setImageFile(null);
   }
 
@@ -84,6 +92,14 @@ function ArticlesPanel() {
             </select>
           </div>
           <textarea name="body" placeholder="Article body..." value={form.body} onChange={handleChange} required />
+          <textarea
+            name="fullBody"
+            placeholder="Full article (long form, shown on article page)..."
+            value={form.fullBody}
+            onChange={handleChange}
+            required
+            style={{ minHeight: 180 }}
+          />
           <div className="admin-form-row">
             <input name="imageUrl" placeholder="Image URL (optional)" value={form.imageUrl} onChange={handleChange} />
             <input name="meta" placeholder="Meta e.g. April 20, 2025 • Club Events" value={form.meta} onChange={handleChange} />
@@ -105,7 +121,10 @@ function ArticlesPanel() {
           <button type="submit" className="admin-btn primary">{editId ? 'Update Article' : 'Add Article'}</button>
           {editId && (
             <button type="button" className="admin-btn" style={{ marginLeft: 8 }}
-              onClick={() => { setEditId(null); setForm({ title: '', body: '', type: 'news', imageUrl: '', meta: '', featured: false }); }}>
+              onClick={() => {
+                setEditId(null);
+                setForm({ title: '', body: '', fullBody: '', type: 'news', imageUrl: '', meta: '', featured: false });
+              }}>
               Cancel
             </button>
           )}
@@ -349,6 +368,7 @@ export default function AdminDashboard() {
 
   function logout() {
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('userToken');
     navigate('/transition', {
       state: {
         to: '/',

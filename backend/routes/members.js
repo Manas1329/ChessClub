@@ -2,15 +2,29 @@ const express = require('express');
 const router = express.Router();
 const Member = require('../models/Member');
 const auth = require('../middleware/auth');
+const bcrypt = require('bcryptjs');
 
 // POST /api/register — public
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, phone, age } = req.body;
-    const existing = await Member.findOne({ email });
+    const { name, email, phone, age, password } = req.body;
+    const normalizedEmail = String(email || '').toLowerCase().trim();
+
+    const existing = await Member.findOne({ email: normalizedEmail });
     if (existing) return res.status(400).json({ error: 'Email already registered' });
 
-    const member = await Member.create({ name, email, phone, age });
+    if (!password || String(password).trim().length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    }
+    const passwordHash = await bcrypt.hash(String(password), 10);
+
+    const member = await Member.create({
+      name,
+      email: normalizedEmail,
+      phone,
+      age,
+      passwordHash,
+    });
     res.status(201).json(member);
   } catch (err) {
     res.status(400).json({ error: err.message });

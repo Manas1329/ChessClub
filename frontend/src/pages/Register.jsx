@@ -4,7 +4,7 @@ import '../styles/restPage.css';
 import { apiUrl } from '../utils/api';
 
 export default function Register() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', age: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', age: '', password: '' });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ export default function Register() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Registration failed');
       setSuccess('Welcome to ChessClub! Your registration is complete.');
-      setForm({ name: '', email: '', phone: '', age: '' });
+      setForm({ name: '', email: '', phone: '', age: '', password: '' });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -55,12 +55,16 @@ export default function Register() {
           type="number" name="age" placeholder="Age" min="5" max="100"
           value={form.age} onChange={handleChange} required
         />
+        <input
+          type="password" name="password" placeholder="Create password (min 6 chars)"
+          value={form.password} onChange={handleChange} minLength={6} required
+        />
         <button type="submit" disabled={loading}>
           {loading ? 'Registering...' : 'Register'}
         </button>
         {error && <p className="form-error">{error}</p>}
         {success && <p className="form-success">{success}</p>}
-        <p>Already a member? <Link to="/login">Admin Login</Link></p>
+        <p>Already have an account? <Link to="/login">Login</Link></p>
         <p><Link to="/">← Back to Home</Link></p>
       </form>
     </div>

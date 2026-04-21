@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Article = require('../models/Article');
 const auth = require('../middleware/auth');
+const authAny = require('../middleware/authAny');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
@@ -33,6 +34,52 @@ router.get('/articles', async (req, res) => {
     res.json(articles);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/articles/:id/full — logged-in users (member/admin)
+router.get('/articles/:id/full', authAny, async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+    if (!article) return res.status(404).json({ error: 'Article not found' });
+
+    const payload = article.toObject();
+    payload.fullBody = payload.fullBody || payload.body;
+    res.json(payload);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// GET /api/articles/:id/related — logged-in users (member/admin)
+router.get('/articles/:id/related', authAny, async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+    if (!article) return res.status(404).json({ error: 'Article not found' });
+
+    const titleTokens = String(article.title || '')
+      .toLowerCase()
+      .split(/\W+/)
+      .filter(token => token.length > 3);
+
+    const query = {
+      _id: { $ne: article._id },
+      $or: [
+        { type: article.type },
+        ...(titleTokens.length ? titleTokens.map(token => ({ title: { $regex: token, $options: 'i' } })) : []),
+      ],
+    };
+
+    let related = await Article.find(query).sort({ createdAt: -1 });
+    if (!related.length) {
+      related = await Article.find({ _id: { $ne: article._id } }).sort({ createdAt: -1 });
+    }
+    if (!related.length) return res.status(404).json({ error: 'No related articles found' });
+
+    const random = related[Math.floor(Math.random() * related.length)];
+    res.json(random);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 

@@ -317,3 +317,123 @@
   color: #444;
   font-size: 14px;
 }
+
+/* ── Article Detail ── */
+.article-detail-page {
+  max-width: 900px;
+  margin: 90px auto 60px;
+  padding: 0 24px;
+}
+
+.article-detail-title {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: #ddd;
+  line-height: 1.25;
+}
+
+.article-detail-meta {
+  margin: 0 0 16px;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 12px;
+}
+
+.article-detail-image-wrap {
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.article-detail-image-wrap img {
+  width: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.9);
+}
+
+.article-detail-body {
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.article-detail-body p {
+  margin: 0 0 14px;
+  color: #b0b0b0;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.article-detail-body p:last-child {
+  margin-bottom: 0;
+}
+
+.article-detail-related {
+  margin-top: 18px;
+  background: #111;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* ── Live Scores Widget ── */
+.live-scores-body {
+  padding: 12px 14px 14px;
+}
+
+.live-scores-msg {
+  margin: 0;
+  color: #666;
+  font-size: 12px;
+}
+
+.live-scores-tournament {
+  margin: 0 0 10px;
+  color: #bbb;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.live-scores-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.live-score-item {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  border-bottom: 1px solid #1f1f1f;
+  padding: 7px 0;
+}
+
+.live-score-item:last-child {
+  border-bottom: none;
+}
+
+.live-rank {
+  color: #888;
+  font-size: 11px;
+}
+
+.live-user {
+  color: #d3d3d3;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-points {
+  color: #d4b84a;
+  font-weight: 700;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+}

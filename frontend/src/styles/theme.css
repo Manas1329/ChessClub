@@ -183,3 +183,33 @@ body[data-theme='light'] .form-container a {
 body[data-theme='light'] .form-container a:hover {
   color: #17345d;
 }
+
+body[data-theme='light'] .article-detail-title {
+  color: #22314b;
+}
+
+body[data-theme='light'] .article-detail-meta {
+  color: #5a6b86;
+}
+
+body[data-theme='light'] .article-detail-image-wrap,
+body[data-theme='light'] .article-detail-body,
+body[data-theme='light'] .article-detail-related {
+  background: #f3f6fb;
+  border-color: #cad5e4;
+}
+
+body[data-theme='light'] .article-detail-body p,
+body[data-theme='light'] .live-scores-tournament,
+body[data-theme='light'] .live-user {
+  color: #4e627f;
+}
+
+body[data-theme='light'] .article-detail-related h4 {
+  color: #22314b !important;
+}
+
+body[data-theme='light'] .live-scores-msg,
+body[data-theme='light'] .live-rank {
+  color: #6f8099;
+}

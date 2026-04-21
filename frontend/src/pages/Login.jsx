@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/restPage.css';
 import { apiUrl } from '../utils/api';
 
 export default function Login() {
-  const [form, setForm] = useState({ username: '', password: '' });
+  const [mode, setMode] = useState('member');
+  const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const redirectTo = location.state?.redirectTo || '/';
 
   function handleChange(e) {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));
@@ -18,18 +22,31 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch(apiUrl('/admin/login'), {
+      const endpoint = mode === 'admin' ? '/admin/login' : '/login';
+      const payload = mode === 'admin'
+        ? { username: form.username, password: form.password }
+        : { email: form.email, password: form.password };
+
+      const res = await fetch(apiUrl(endpoint), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed');
-      localStorage.setItem('adminToken', data.token);
+
+      if (mode === 'admin') {
+        localStorage.setItem('adminToken', data.token);
+        localStorage.removeItem('userToken');
+      } else {
+        localStorage.setItem('userToken', data.token);
+      }
+
+      const destination = mode === 'admin' && redirectTo === '/' ? '/admin' : redirectTo;
       navigate('/transition', {
         state: {
-          to: '/admin',
-          message: 'Setting up admin board...',
+          to: destination,
+          message: mode === 'admin' ? 'Setting up admin board...' : 'Signing you in...',
           delay: 1100,
         },
       });
@@ -43,12 +60,35 @@ export default function Login() {
 
   return (
     <div className="form-container">
-      <h1>Admin Login</h1>
+      <h1>Login</h1>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+        <button
+          type="button"
+          onClick={() => setMode('member')}
+          style={{ flex: 1, width: 'auto', marginTop: 0, padding: '8px 10px', opacity: mode === 'member' ? 1 : 0.7 }}
+        >
+          Member
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode('admin')}
+          style={{ flex: 1, width: 'auto', marginTop: 0, padding: '8px 10px', opacity: mode === 'admin' ? 1 : 0.7 }}
+        >
+          Admin
+        </button>
+      </div>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text" name="username" placeholder="Username"
-          value={form.username} onChange={handleChange} required
-        />
+        {mode === 'admin' ? (
+          <input
+            type="text" name="username" placeholder="Admin username"
+            value={form.username} onChange={handleChange} required
+          />
+        ) : (
+          <input
+            type="email" name="email" placeholder="Registered email"
+            value={form.email} onChange={handleChange} required
+          />
+        )}
         <input
           type="password" name="password" placeholder="Password"
           value={form.password} onChange={handleChange} required
@@ -57,7 +97,7 @@ export default function Login() {
           {loading ? 'Logging in...' : 'Login'}
         </button>
         {error && <p className="form-error">{error}</p>}
-        <p>Not an admin? <Link to="/register">Register as member</Link></p>
+        <p>New member? <Link to="/register">Create your account</Link></p>
         <p><Link to="/">← Back to Home</Link></p>
       </form>
     </div>

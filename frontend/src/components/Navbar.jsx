@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
+import { getAuthRole, isLoggedIn } from '../utils/api';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const isAdmin = !!localStorage.getItem('adminToken');
+  const loggedIn = isLoggedIn();
+  const role = getAuthRole();
+  const isAdmin = role === 'admin';
 
   function handleLogout() {
     localStorage.removeItem('adminToken');
+    localStorage.removeItem('userToken');
     navigate('/transition', {
       state: {
         to: '/',
@@ -25,13 +29,13 @@ export default function Navbar() {
       <div className="navbuttons">
         <Link to="/register" className="navbutton">Sign Up</Link>
         <Link to="/gallery" className="navbutton">Gallery</Link>
-        {isAdmin ? (
+        {loggedIn ? (
           <>
-            <Link to="/admin" className="navbutton">Admin</Link>
+            {isAdmin && <Link to="/admin" className="navbutton">Admin</Link>}
             <button className="navbutton" onClick={handleLogout}>Logout</button>
           </>
         ) : (
-          <Link to="/login" className="navbutton">Admin Login</Link>
+          <Link to="/login" className="navbutton">Login</Link>
         )}
         <ThemeToggle />
       </div>

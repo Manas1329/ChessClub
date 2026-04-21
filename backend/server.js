@@ -23,6 +23,7 @@ app.use('/api', require('./routes/articles'));
 app.use('/api', require('./routes/events'));
 app.use('/api', require('./routes/products'));
 app.use('/api', require('./routes/gallery'));
+app.use('/api', require('./routes/chess'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
