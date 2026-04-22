@@ -20,53 +20,76 @@ export default function LiveScoresWidget() {
       setError('');
 
       try {
-        const res = await fetch(apiUrl('/chess/live-scores'), {
+        const res = await fetch(apiUrl('/chess/all-results'), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const payload = await res.json();
-        if (!res.ok) throw new Error(payload.error || 'Unable to load live scores');
+        if (!res.ok) throw new Error(payload.error || 'Unable to load chess results');
         if (!mounted) return;
         setData(payload);
       } catch (err) {
         if (!mounted) return;
-        setError(err.message || 'Live scores unavailable');
+        setError(err.message || 'Chess results unavailable');
       } finally {
         if (mounted) setLoading(false);
       }
     }
 
     load();
-    const timer = setInterval(load, 60000);
+    const timer = setInterval(load, 300000);
     return () => {
       mounted = false;
       clearInterval(timer);
     };
   }, []);
 
-  return (
-    <div className="sidebar-widget" id="live-scores-widget">
-      <div className="widget-header">
-        <span className="widget-icon">Live</span>
-        <h3 className="widget-title">Live Chess Scores</h3>
-      </div>
+  // Separate events by category
+  const liveEvents = (data?.events || []).filter(e => e.isLive);
+  const finishedEvents = (data?.events || []).filter(e => !e.isLive);
 
-      <div className="live-scores-body">
-        {loading && <p className="live-scores-msg">Loading live standings...</p>}
-        {!loading && error && <p className="live-scores-msg">{error}</p>}
-        {!loading && !error && data?.tournament && (
-          <>
-            <p className="live-scores-tournament">
-              {data.tournament.name} ({data.tournament.status})
-            </p>
+  const renderEventSection = (title, events, categoryClass, showRedDot = false) => (
+    <div className={`results-section ${categoryClass}`}>
+      <h4 className="section-title">
+        {showRedDot && <span className="red-dot">●</span>}
+        {title}
+      </h4>
+      {events.length === 0 ? (
+        <p className="section-empty">Currently no events</p>
+      ) : (
+        events.map(event => (
+          <div key={event.id} className={`final-event-block ${event.isLive ? 'event-live' : 'event-finished'}`}>
+            <p className="live-scores-tournament">{event.name}</p>
             <ul className="live-scores-list">
-              {(data.standings || []).map(player => (
-                <li key={`${player.username}-${player.rank}`} className="live-score-item">
+              {(event.standings || []).map(player => (
+                <li key={`${event.id}-${player.username}-${player.rank}`} className="live-score-item">
                   <span className="live-rank">#{player.rank}</span>
                   <span className="live-user">{player.title ? `${player.title} ` : ''}{player.username}</span>
-                  <span className="live-points">{player.score}</span>
+                  <span className="live-points">{player.finalScore}</span>
                 </li>
               ))}
             </ul>
+          </div>
+        ))
+      )}
+    </div>
+  );
+
+  return (
+    <div className="sidebar-widget" id="live-scores-widget">
+      <div className="widget-header">
+        <span className="widget-icon">⚔️</span>
+        <h3 className="widget-title">Chess Results</h3>
+      </div>
+
+      <div className="live-scores-body">
+        {loading && <p className="live-scores-msg">Loading chess results...</p>}
+        {!loading && error && <p className="live-scores-msg">{error}</p>}
+        {!loading && !error && (
+          <>
+            {renderEventSection('Live', liveEvents, 'section-live', true)}
+            {renderEventSection('Finished', finishedEvents, 'section-finished')}
+            {renderEventSection('Club', [], 'section-club')}
+            <p className="club-event-note">Club events will be available in a future update.</p>
           </>
         )}
       </div>

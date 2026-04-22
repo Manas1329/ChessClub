@@ -437,3 +437,181 @@
   font-family: 'Courier New', Courier, monospace;
   font-size: 12px;
 }
+
+.final-event-block {
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #1f1f1f;
+}
+
+.final-event-block:last-of-type {
+  margin-bottom: 8px;
+}
+
+.club-event-note {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #8f8f8f;
+}
+At line:1 char:1
++ @
++ ~
+Unrecognized token in source text.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordEx 
+   ception
+    + FullyQualifiedErrorId : UnrecognizedToken
+ 
+
+/* Results Sections */
+.results-section {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #b0b0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.red-dot {
+  color: #ff3333;
+  font-size: 14px;
+  line-height: 1;
+  animation: blink-dot 1.5s ease-in-out infinite;
+  animation: blink-dot 1.5s ease-in-out infinite;
+  animation: blink-dot 1.5s ease-in-out infinite;
+}
+
+.section-empty {
+  font-size: 12px;
+  color: #7f7f7f;
+  margin: 8px 0;
+  font-style: italic;
+}
+
+.section-live .section-title {
+  color: #ff6b6b;
+  border-bottom-color: rgba(255, 107, 107, 0.2);
+}
+
+.section-finished .section-title {
+  color: #84fab0;
+  border-bottom-color: rgba(132, 250, 176, 0.2);
+}
+
+.section-club .section-title {
+  color: #a8a8a8;
+  border-bottom-color: #2a2a2a;
+}
+
+/* Results Sections */
+.results-section {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #b0b0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.red-dot {
+  color: #ff3333;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.section-empty {
+  font-size: 12px;
+  color: #7f7f7f;
+  margin: 8px 0;
+  font-style: italic;
+}
+
+.section-live .section-title {
+  color: #ff6b6b;
+  border-bottom-color: rgba(255, 107, 107, 0.2);
+}
+
+.section-finished .section-title {
+  color: #84fab0;
+  border-bottom-color: rgba(132, 250, 176, 0.2);
+}
+
+.section-club .section-title {
+  color: #a8a8a8;
+  border-bottom-color: #2a2a2a;
+}
+
+/* Results Sections */
+.results-section {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #b0b0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.red-dot {
+  color: #ff3333;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.section-empty {
+  font-size: 12px;
+  color: #7f7f7f;
+  margin: 8px 0;
+  font-style: italic;
+}
+
+.section-live .section-title {
+  color: #ff6b6b;
+  border-bottom-color: rgba(255, 107, 107, 0.2);
+}
+
+.section-finished .section-title {
+  color: #84fab0;
+  border-bottom-color: rgba(132, 250, 176, 0.2);
+}
+
+.section-club .section-title {
+  color: #a8a8a8;
+  border-bottom-color: #2a2a2a;
+}
+
+/* Blinking animation for live dot */
+@keyframes blink-dot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
